@@ -4,7 +4,7 @@
 # combination will be stored as a string, e.g.
 # 'rbyg' 'wbgb'
 class Code
-  COLORS = %w[r b y g w b].freeze
+  COLORS = %w[r b y g w v].freeze
   # code - string of player input
   # random - bool, true if computer generating
   # a code randomly
