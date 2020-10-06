@@ -19,17 +19,25 @@ class Code
       @code = code
     end
   end
-  
+
   # returns the feedback based on a player
   # guess. indicates how many are right
   # and if any colors are correct but in
   # the wrong place
   def give_feedback(guess)
-    guess.split('').each_with_index { |val, index| print 'M' if val == @code[index] }
+    guess.split('').each_with_index do |val, index|
+      if val == @code[index]
+        print 'M'
+      elsif @code.split('').include?(val)
+        print 'O'
+      else
+        print 'X'
+      end
+    end
     puts
   end
 
 end
 
-secret = Code.new('rbyg')
-secret.give_feedback('rbyg')
+secret = Code.new('rryg')
+secret.give_feedback('gggr')
