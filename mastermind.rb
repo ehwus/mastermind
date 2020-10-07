@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class for the color combination players can choose
 # 6 available colors included in array, 4 slots for
 # choice.
@@ -60,10 +62,14 @@ class Player
     end
     @role = role
   end
-end
 
-secret = Code.new('rryg')
-secret.give_feedback('gggr')
-p secret.check_winner('rryg')
-player = Player.new
-p player
+  # see if there are remaining guesses
+  def guesses_left?
+    @guesses.positive?
+  end
+
+  # take guess away from player
+  def use_guess
+    @guesses -= 1
+  end
+end
