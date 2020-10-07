@@ -24,7 +24,7 @@ class Code
   # the code
   def check_winner(guess)
     guess == @code
-  end  
+  end
 
   # returns the feedback based on a player
   # guess. indicates how many are right
@@ -42,9 +42,28 @@ class Code
     end
     puts
   end
+end
 
+# Store data about the player
+# including guesses and whether
+# they are codebreaker or
+# codemaster
+class Player
+  attr_reader :guesses, :role
+  def initialize
+    @guesses = 12
+    role = nil
+    loop do
+      puts 'Codebreaker or Codemaster?'
+      role = gets.chomp
+      break if role == 'codebreaker' || role == 'codemaster'
+    end
+    @role = role
+  end
 end
 
 secret = Code.new('rryg')
 secret.give_feedback('gggr')
 p secret.check_winner('rryg')
+player = Player.new
+p player
