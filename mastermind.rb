@@ -20,6 +20,12 @@ class Code
     end
   end
 
+  # returns true if player guess matches
+  # the code
+  def check_winner(guess)
+    guess == @code
+  end  
+
   # returns the feedback based on a player
   # guess. indicates how many are right
   # and if any colors are correct but in
@@ -41,3 +47,4 @@ end
 
 secret = Code.new('rryg')
 secret.give_feedback('gggr')
+p secret.check_winner('rryg')
