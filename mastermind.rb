@@ -70,6 +70,18 @@ class Player
   end
 end
 
+# prompt player for a valid 4 letter code
+def prompt_for_valid_code
+  colors = %w[r b y g w v]
+  code = nil
+  loop do
+    puts 'Enter a valid code'
+    code = gets.chomp
+    next if code.length != 4
+    return code if code.split('').all? { |char| colors.include?(char) }
+  end
+end
+
 # MAIN
 # take human players role
 role = nil
@@ -82,14 +94,7 @@ player1 = Player.new(role)
 
 # loop for player being CODEMASTER
 if player1.role == 'codemaster'
-  COLORS = %w[r b y g w v].freeze
-  code = nil
-  loop do
-    puts 'Enter a valid code'
-    code = gets.chomp
-    next if code.length != 4
-    break if code.split('').all? { |char| COLORS.include?(char) }
-  end
+  secret_code = Code.new(prompt_for_valid_code)
 end
 
 # loop for player being CODEBREAKER
@@ -111,4 +116,3 @@ if player1.role == 'codebreaker'
     puts "#{player1.guesses} remaining"
   end
 end
-  
