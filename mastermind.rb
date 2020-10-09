@@ -105,7 +105,7 @@ random_code = Code.new('random')
 if player1.role == 'codebreaker'
   loop do
     puts "make your guess!"
-    guess = gets.chomp
+    guess = prompt_for_valid_code
     if random_code.check_winner(guess)
       puts "A winner is you!"
       break
@@ -113,6 +113,6 @@ if player1.role == 'codebreaker'
 
     random_code.give_feedback(guess)
     player1.use_guess
-    puts "#{player1.guesses} remaining"
+    puts "#{player1.guesses} guesses remaining"
   end
 end
