@@ -6,7 +6,7 @@
 # combination will be stored as a string, e.g.
 # 'rbyg' 'wbgb'
 class Code
-  attr_reader :COLORS
+  attr_reader :code
 
   COLORS = %w[r b y g w v].freeze
   # code - string of player input
@@ -95,14 +95,34 @@ player1 = Player.new(role)
 # loop for player being CODEMASTER
 if player1.role == 'codemaster'
   secret_code = Code.new(prompt_for_valid_code)
+  computer = Player.new('codebreaker')
+  loop do
+    puts "Time for the computer to guess"
+    sleep(2)
+    guess = Code.new('random').code
+    puts "The computer guesses #{guess}"
+    sleep(2)
+    if secret_code.check_winner(guess)
+      puts 'The computer has won, the singularity is upon us!'
+      break
+    end
+
+    puts 'The computer recieves your feedback'
+    secret_code.give_feedback(guess)
+    sleep(2)
+    computer.use_guess
+
+    if computer.guesses == 0
+      puts 'The computer has run out of guesses, you win!'
+      break
+    end
+    puts "The computer has #{computer.guesses} guesses left"
+  end
 end
 
 # loop for player being CODEBREAKER
-# create new random code
-random_code = Code.new('random')
-
-# main game loop
 if player1.role == 'codebreaker'
+  random_code = Code.new('random')
   loop do
     puts "make your guess!"
     guess = prompt_for_valid_code
@@ -113,6 +133,11 @@ if player1.role == 'codebreaker'
 
     random_code.give_feedback(guess)
     player1.use_guess
+    if player1.guesses == 0
+      puts "You're out of guesses, Game Over!"
+      break
+    end
+
     puts "#{player1.guesses} guesses remaining"
   end
 end
