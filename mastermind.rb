@@ -97,7 +97,7 @@ if player1.role == 'codemaster'
   secret_code = Code.new(prompt_for_valid_code)
   computer = Player.new('codebreaker')
   loop do
-    puts "Time for the computer to guess"
+    puts 'Time for the computer to guess'
     sleep(2)
     guess = Code.new('random').code
     puts "The computer guesses #{guess}"
@@ -112,7 +112,7 @@ if player1.role == 'codemaster'
     sleep(2)
     computer.use_guess
 
-    if computer.guesses == 0
+    if computer.guesses.zero?
       puts 'The computer has run out of guesses, you win!'
       break
     end
@@ -124,16 +124,16 @@ end
 if player1.role == 'codebreaker'
   random_code = Code.new('random')
   loop do
-    puts "make your guess!"
+    puts 'make your guess!'
     guess = prompt_for_valid_code
     if random_code.check_winner(guess)
-      puts "A winner is you!"
+      puts 'A winner is you!'
       break
     end
 
     random_code.give_feedback(guess)
     player1.use_guess
-    if player1.guesses == 0
+    if player1.guesses.zero?
       puts "You're out of guesses, Game Over!"
       break
     end
