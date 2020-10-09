@@ -52,14 +52,8 @@ end
 # codemaster
 class Player
   attr_reader :role
-  def initialize
+  def initialize(role)
     @guesses = 12
-    role = nil
-    loop do
-      puts 'Codebreaker or Codemaster?'
-      role = gets.chomp
-      break if role == 'codebreaker' || role == 'codemaster'
-    end
     @role = role
   end
 
@@ -75,7 +69,13 @@ class Player
 end
 
 # MAIN
-player1 = Player.new
+role = nil
+loop do
+  puts 'Codebreaker or Codemaster?'
+  role = gets.chomp
+  break if role == 'codebreaker' || role == 'codemaster'
+end
+player1 = Player.new(role)
 if player1.role == 'codemaster'
   puts 'todo!'
   exit
