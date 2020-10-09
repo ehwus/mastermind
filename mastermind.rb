@@ -6,6 +6,8 @@
 # combination will be stored as a string, e.g.
 # 'rbyg' 'wbgb'
 class Code
+  attr_reader :COLORS
+
   COLORS = %w[r b y g w v].freeze
   # code - string of player input
   # random - bool, true if computer generating
@@ -69,6 +71,7 @@ class Player
 end
 
 # MAIN
+# take human players role
 role = nil
 loop do
   puts 'Codebreaker or Codemaster?'
@@ -76,23 +79,36 @@ loop do
   break if role == 'codebreaker' || role == 'codemaster'
 end
 player1 = Player.new(role)
+
+# loop for player being CODEMASTER
 if player1.role == 'codemaster'
-  puts 'todo!'
-  exit
+  COLORS = %w[r b y g w v].freeze
+  code = nil
+  loop do
+    puts 'Enter a valid code'
+    code = gets.chomp
+    next if code.length != 4
+    break if code.split('').all? { |char| COLORS.include?(char) }
+  end
 end
 
+# loop for player being CODEBREAKER
 # create new random code
 random_code = Code.new('random')
 
 # main game loop
-loop do
-  puts "make your guess!"
-  guess = gets.chomp
-  if random_code.check_winner(guess)
-    puts "A winner is you!"
-    break
+if player1.role == 'codebreaker'
+  loop do
+    puts "make your guess!"
+    guess = gets.chomp
+    if random_code.check_winner(guess)
+      puts "A winner is you!"
+      break
+    end
 
-  random_code.give_feedback(guess)
-  player1.use_guess
-  puts "#{player1.guesses} remaining"
+    random_code.give_feedback(guess)
+    player1.use_guess
+    puts "#{player1.guesses} remaining"
+  end
 end
+  
