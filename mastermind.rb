@@ -51,7 +51,7 @@ end
 # they are codebreaker or
 # codemaster
 class Player
-  attr_reader :role
+  attr_reader :role, :guesses
   def initialize(role)
     @guesses = 12
     @role = role
@@ -88,8 +88,11 @@ random_code = Code.new('random')
 loop do
   puts "make your guess!"
   guess = gets.chomp
-  break if random_code.check_winner(guess)
+  if random_code.check_winner(guess)
+    puts "A winner is you!"
+    break
 
   random_code.give_feedback(guess)
   player1.use_guess
+  puts "#{player1.guesses} remaining"
 end
